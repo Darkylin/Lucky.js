@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>three.js webgl - geometry - shapes</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <style>
+    body {
+      background-color: red;
+      margin: 0px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+
+<script src="/bower_components/threejs/build/three.min.js"></script>
+<script src="scripts/stats.min.js"></script>
+
+<script>
+  var COLORS = [0x00a0e9, 0xee7500, 0xe50061, 0x009c7a, 0x0aa43d, 0x731485, 0xfed700, 0x006ebc,];
+  function random(start, end) {
+    if (start instanceof Array) {
+      return start[random(0, start.length)];
+    }
+    return Math.floor(Math.random() * (end - start)) + start;
+  }
+
+  var container, stats;
+
+  var camera, scene, renderer;
+
+  var scraps = [];
+
+  var targetRotation = 0;
+  var targetRotationOnMouseDown = 0;
+
+  var mouseX = 0;
+  var mouseXOnMouseDown = 0;
+
+  var windowHalfX = window.innerWidth / 2;
+  var windowHalfY = window.innerHeight / 2;
+  var windowBoundY = -windowHalfY - 10;
+
+  function addScrap() {
+    var shape = new THREE.Shape();
+    shape.moveTo(random(-2, -4), random(-2, -4));
+    shape.lineTo(random(2, 4), random(-2, -4));
+    shape.lineTo(random(2, 4), random(2, 4));
+    shape.lineTo(random(-2, -4), random(2, 4));
+    var geometry = new THREE.ShapeGeometry(shape);
+    var color = random(COLORS);
+    var mesh = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({
+      color: color,
+      emissive: color,
+      side: THREE.DoubleSide
+    }));
+
+    mesh.position.x = random(-windowHalfX, windowHalfX);
+    mesh.position.y = random(windowHalfY, windowHalfY + 10);
+
+    mesh.position.next = function () {
+      this.y -= 2;
+    }
+    mesh.rotation.x = random(0, 180);
+    mesh.rotation.y = random(0, 2);
+    mesh.rotation.next = function () {
+      this.x += 0.04;
+    }
+    scene.add(mesh)
+    scraps.push(mesh);
+  }
+
+  var scrapStartIndex = 0;
+  init();
+  animate();
+
+
+
+  function init() {
+
+    container = document.createElement('div');
+    document.body.appendChild(container);
+
+    scene = new THREE.Scene();
+
+    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+    camera.position.set(0, 0, 500);
+    scene.add(camera);
+
+
+    function addLight(x, y, z, a) {
+      var light = new THREE.DirectionalLight(0xffffff, a || 0.8);
+      light.position.set(x, y, z);
+      camera.add(light);
+    }
+
+    addLight(0, 1, 0);
+    addLight(0, -1, 0);
+    addLight(1, 0, 0);
+    addLight(-1, 0, 0);
+
+//    var light = new THREE.AmbientLight( 0x000000 ); // soft white light
+//    scene.add( light );
+
+
+    renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
+
+    stats = new Stats();
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.top = '0px';
+    container.appendChild(stats.domElement);
+
+
+    window.addEventListener('resize', onWindowResize, false);
+    scrapStartIndex = scene.children.length;
+    console.log(scrapStartIndex)
+  }
+
+  function onWindowResize() {
+
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
+    windowBoundY = -windowHalfY - 10;
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+  }
+  var stop = false;
+
+  function animate() {
+    if(!stop)
+      requestAnimationFrame(animate);
+    render();
+    stats.update();
+
+  }
+
+  function render() {
+    addScrap();
+    scraps.forEach(function (mesh) {
+      mesh.rotation.next();
+      mesh.position.next();
+    });
+    console.log(scene.children.length);
+    renderer.render(scene, camera);
+  }
+
+
+  function clearScrap(){
+    scraps.forEach(function (scrap) {
+      if (scrap.position.y < windowBoundY) {
+        scene.remove(scrap);
+        scrap.geometry.dispose();
+        scrap.material.dispose();
+      }
+    });
+    scraps = scene.children.slice(scrapStartIndex);
+  }
+  setInterval(clearScrap, 10000);
+
+
+
+</script>
+
+</body>
+</html>

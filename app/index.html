@@ -1,0 +1,44 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <title>lucky js</title>
+  <meta name="description" content="我要大奖！！！">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+<body>
+<canvas id="testCanvas">
+  <p class="browsehappy">浏览器版本太<strong>out</strong>啦，快快<a href="http://browsehappy.com/">升级</a>！~~~</p>
+</canvas>
+<div id="container" data-width="1113" data-height="809" data-minpadding="20">
+  <h1><span class="h1" id="titleText"></span></h1>
+  <div class="lottery-border">
+  <canvas id="lotteryCanvas">
+
+  </canvas>
+  </div>
+</div>
+<div id="scrap"></div>
+<div id="listbg"></div>
+<div id="indexbg"></div>
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/requirejs/require.js"></script>
+<script src="bower_components/js-xls/dist/xls.js"></script>
+<script src="bower_components/threejs/build/three.js"></script>
+<!-- endbower -->
+<script src="scripts/mylib/Dollar.js"></script>
+<!-- endbuild -->
+
+<script src="scripts/main.js"></script>
+<div class="test">&nbsp;</div>
+</body>
+</html>

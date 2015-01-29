@@ -1,0 +1,116 @@
+@font-face {
+  font-family: yahei;
+  src: url("fonts/Microsoft Yahei.ttf") format("truetype"); }
+@font-face {
+  font-family: yahei;
+  src: url("fonts/MicrosoftYahei Bold.ttf") format("truetype");
+  font-weight: bold; }
+.browsehappy {
+  margin: 0.2em 0;
+  background: #FFE500;
+  color: #55331C;
+  padding: 0.2em 0;
+  text-align: center;
+  font-family: yahei; }
+  .browsehappy strong {
+    margin: 0 5px; }
+
+body {
+  margin: 0; }
+
+#background {
+  top: 0;
+  z-index: -1;
+  position: absolute; }
+
+#testCanvas {
+  z-index: 100;
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 3em; }
+
+.h1:before, .h1:after {
+  content: attr(data-text);
+  display: inline-block;
+  font: italic bold 70px/1 yahei; }
+
+h1:before, h1:after {
+  background: url(../images/h1-dec.png) no-repeat;
+  content: '\0020';
+  width: 152px;
+  height: 53px;
+  display: inline-block;
+  top: 32px;
+  position: relative; }
+
+h1 {
+  position: relative;
+  margin: 0;
+  height: 78px; }
+
+h1:after {
+  background-position-x: -162px; }
+
+.h1 {
+  margin: 0 -20px; }
+
+.h1:before {
+  color: #fff1a6;
+  text-shadow: #de7700 1px 1px, #d97300 2px 2px, #d26b00 3px 3px, #cb6400 4px 4px, #c15b00 5px 5px, #c96200 6px 6px, #b34c00 7px 7px, rgba(0, 0, 0, 0.7) 10px 10px 5px; }
+
+.h1:after {
+  color: #ffdd2b;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  mask-image: -webkit-gradient(linear, left top, left bottom, from(transparent), to(black)); }
+
+#container {
+  text-align: center;
+  transform-origin: 0 0;
+  z-index: 10; }
+
+#contentWrapper {
+  position: relative;
+  z-index: 10; }
+
+.lottery-border {
+  margin-top: 20px;
+  height: 704px;
+  background: #ff4949;
+  border-radius: 6px; }
+
+#lotteryCanvas {
+  box-sizing: border-box;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  padding: 30px;
+  margin-top: 6px;
+  background: #f8d56b; }
+
+#scrap {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1; }
+
+.preload-font {
+  display: none;
+  font-family: yahei; }
+
+#listbg, #indexbg {
+  position: absolute;
+  top: 0; }
+
+#indexbg {
+  transition: all 1s; }
+
+#indexbg.hide {
+  transform: rotateX(90deg); }
+
+/*# sourceMappingURL=main.css.map */

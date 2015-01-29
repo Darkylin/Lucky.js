@@ -1,0 +1,11 @@
+{
+  "name": "lucky-js",
+  "private": true,
+  "dependencies": {
+    "requirejs": "~2.1.5",
+    "js-xls": "~0.7.2",
+    "requirejs-plugins": "~1.0.3",
+    "random": "~1.0.4",
+    "threejs": "*"
+  }
+}
